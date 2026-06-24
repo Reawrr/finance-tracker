@@ -74,12 +74,12 @@ export default function Login() {
 
         <p className="text-center mt-4">
           Belum punya akun?
-          <a
-            href="/register"
+          <link
+            to="/register"
             className="text-blue-600 ml-1"
           >
             Register
-          </a>
+          </link>
         </p>
 
       </div>

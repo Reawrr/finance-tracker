@@ -99,12 +99,12 @@ export default function Register() {
 
         <p className="text-center mt-4">
           Sudah punya akun?
-          <a
+          <link
             href="/"
             className="text-blue-600 ml-1"
           >
             Login
-          </a>
+          </link>
         </p>
 
       </div>
