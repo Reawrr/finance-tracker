@@ -198,27 +198,67 @@ export default function Transactions() {
   return (
     <>
       <Navbar />
-        <div style={{ padding: "20px" }}>
-          <h1>Finance Tracker</h1>
 
-          <h2>Tambah Transaksi</h2>
+      <div className="max-w-7xl mx-auto p-6">
+
+        <h1 className="text-3xl font-bold mb-6">
+          Transaksi
+        </h1>
+
+        {/* Search */}
+
+        <div className="bg-white p-4 rounded-xl shadow mb-6">
+
+          <div className="flex gap-3">
+
+            <input
+              type="text"
+              placeholder="Cari transaksi..."
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+              className="flex-1 border rounded-lg p-3"
+            />
+
+            <button
+              onClick={() =>
+                fetchTransactions(1)
+              }
+              className="bg-blue-600 text-white px-5 rounded-lg hover:bg-blue-700"
+            >
+              Cari
+            </button>
+
+          </div>
+
+        </div>
+
+        {/* Form */}
+
+        <div className="bg-white p-6 rounded-xl shadow mb-8">
+
+          <h2 className="text-xl font-semibold mb-4">
+
+            {editingId
+              ? "Edit Transaction"
+              : "Add Transaction"}
+
+          </h2>
 
           <form
             onSubmit={handleSubmit}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              maxWidth: "400px",
-            }}
+            className="grid md:grid-cols-2 gap-4"
           >
+
             <select
               name="category_id"
               value={form.category_id}
               onChange={handleChange}
+              className="border rounded-lg p-3"
             >
               <option value="">
-                Pilih Category
+                Pilih Kategori
               </option>
 
               {categories.map(category => (
@@ -226,9 +266,7 @@ export default function Transactions() {
                   key={category.id}
                   value={category.id}
                 >
-                  {category.name}
-                  {" "}
-                  ({category.type})
+                  {category.name} ({category.type})
                 </option>
               ))}
             </select>
@@ -239,6 +277,7 @@ export default function Transactions() {
               placeholder="Amount"
               value={form.amount}
               onChange={handleChange}
+              className="border rounded-lg p-3"
             />
 
             <input
@@ -247,6 +286,7 @@ export default function Transactions() {
               placeholder="Description"
               value={form.description}
               onChange={handleChange}
+              className="border rounded-lg p-3"
             />
 
             <input
@@ -254,28 +294,28 @@ export default function Transactions() {
               name="transaction_date"
               value={form.transaction_date}
               onChange={handleChange}
+              className="border rounded-lg p-3"
             />
 
-            <button
-              type="submit"
-              className={
-                editingId
-                  ? "bg-blue-500 text-white px-3 py-1 rounded"
-                  : "bg-green-500 text-white px-3 py-1 rounded"
-              }
-            >
-              {
-                editingId
-                  ? "Update Transaction"
-                  : "Add Transaction"
-              }
-            </button>
+            <div className="flex gap-3 md:col-span-2">
 
-            {
-              editingId && (
+              <button
+                type="submit"
+                className={`text-white px-5 py-3 rounded-lg ${
+                  editingId
+                    ? "bg-yellow-500 hover:bg-yellow-600"
+                    : "bg-green-600 hover:bg-green-700"
+                }`}
+              >
+                {editingId
+                  ? "Update Transaction"
+                  : "Add Transaction"}
+              </button>
+
+              {editingId && (
                 <button
                   type="button"
-                  className="bg-gray-500 text-white px-3 py-1 rounded"
+                  className="bg-gray-500 text-white px-5 py-3 rounded-lg hover:bg-gray-600"
                   onClick={() => {
 
                     setEditingId(null);
@@ -291,144 +331,168 @@ export default function Transactions() {
                 >
                   Cancel
                 </button>
-              )
-            }
+              )}
+
+            </div>
+
           </form>
 
-          <hr />
-
-          <h2 className="text-3xl font-bold mb-6">Daftar Transaksi</h2>
-
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              <table className="w-full bg-white shadow rounded">
-                <thead className="bg-gray-200">
-                  <tr>
-                    <th className="p-3 text-left">ID</th>
-                    <th className="p-3 text-left">Category</th>
-                    <th className="p-3 text-left">Type</th>
-                    <th className="p-3 text-left">Amount</th>
-                    <th className="p-3 text-left">Description</th>
-                    <th className="p-3 text-left">Date</th>
-                    <th className="p-3 text-left">Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {transactions.length === 0 ? (
-                    <tr>
-                      <td colSpan="7">
-                        Tidak ada transaksi
-                      </td>
-                    </tr>
-                  ) : (
-                    transactions.map((transaction) => (
-                      <tr key={transaction.id}>
-                        <td className="p-3 border-t">{transaction.id}</td>
-
-                        <td className="p-3 border-t">{transaction.category}</td>
-
-                        <td className="p-3 border-t">{transaction.type}</td>
-
-                        <td className="p-3 border-t">
-                          Rp{" "}
-                          {Number(
-                            transaction.amount
-                          ).toLocaleString("id-ID")}
-                        </td>
-
-                        <td className="p-3 border-t">
-                          {transaction.description}
-                        </td>
-
-                        <td className="p-3 border-t">
-                          {new Date(
-                            transaction.transaction_date
-                          ).toLocaleDateString("id-ID")}
-                        </td>
-
-                        <td className="p-3 border-t space-x-2">
-                          <button
-                            className="bg-gray-200 text-black px-3 py-1 rounded"
-                            onClick={() =>
-                              handleEdit(transaction)
-                            }
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="bg-red-500 text-white px-3 py-1 rounded"
-                            onClick={() =>
-                              deleteTransaction(
-                                transaction.id
-                              )
-                            }
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-
-              <div
-                style={{
-                  marginTop: "20px",
-                  display: "flex",
-                  gap: "10px",
-                  alignItems: "center",
-                }}
-              >
-                <button
-                  className="bg-gray-200 text-black px-3 py-1 rounded"
-                  disabled={page === 1}
-                  onClick={() =>
-                    fetchTransactions(page - 1)
-                  }
-                >
-                  Previous
-                </button>
-
-                <span>
-                  Page {page} of {totalPages}
-                </span>
-
-                <button
-                  className="bg-gray-200 text-black px-3 py-1 rounded"
-                  disabled={page === totalPages}
-                  onClick={() =>
-                    fetchTransactions(page + 1)
-                  }
-                >
-                  Next
-                </button>
-
-                <input
-                  type="text"
-                  placeholder="Search transaction..."
-                  value={search}
-                  onChange={(e) =>
-                    setSearch(e.target.value)
-                  }
-                />
-
-                <button
-                  className="bg-gray-200 text-black px-3 py-1 rounded"
-                  onClick={() =>
-                    fetchTransactions(1)
-                  }
-                >
-                  Search
-                </button>
-                
-              </div>
-            </>
-          )}
         </div>
+
+        {/* Table */}
+
+        <div className="bg-white rounded-xl shadow overflow-hidden">
+
+          <table className="w-full">
+
+            <thead className="bg-slate-100">
+
+              <tr>
+                <th className="p-4 text-left">ID</th>
+                <th className="p-4 text-left">Category</th>
+                <th className="p-4 text-left">Type</th>
+                <th className="p-4 text-left">Amount</th>
+                <th className="p-4 text-left">Description</th>
+                <th className="p-4 text-left">Date</th>
+                <th className="p-4 text-left">Action</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {transactions.length === 0 ? (
+
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="text-center p-8"
+                  >
+                    Tidak ada transaksi
+                  </td>
+                </tr>
+
+              ) : (
+
+                transactions.map(transaction => (
+
+                  <tr
+                    key={transaction.id}
+                    className="border-t hover:bg-gray-50"
+                  >
+
+                    <td className="p-4">
+                      {transaction.id}
+                    </td>
+
+                    <td className="p-4">
+                      {transaction.category}
+                    </td>
+
+                    <td className="p-4">
+
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          transaction.type === "income"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {transaction.type}
+                      </span>
+
+                    </td>
+
+                    <td
+                      className={`p-4 font-semibold ${
+                        transaction.type === "income"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      Rp{" "}
+                      {Number(
+                        transaction.amount
+                      ).toLocaleString("id-ID")}
+                    </td>
+
+                    <td className="p-4">
+                      {transaction.description}
+                    </td>
+
+                    <td className="p-4">
+                      {new Date(
+                        transaction.transaction_date
+                      ).toLocaleDateString("id-ID")}
+                    </td>
+
+                    <td className="p-4 flex gap-2">
+
+                      <button
+                        onClick={() =>
+                          handleEdit(transaction)
+                        }
+                        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          deleteTransaction(
+                            transaction.id
+                          )
+                        }
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      >
+                        Hapus
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        {/* Pagination */}
+
+        <div className="flex justify-between items-center mt-6">
+
+          <button
+            disabled={page === 1}
+            onClick={() =>
+              fetchTransactions(page - 1)
+            }
+            className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          <span className="font-medium">
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() =>
+              fetchTransactions(page + 1)
+            }
+            className="bg-gray-200 px-4 py-2 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+
+        </div>
+
+      </div>
     </>
   );
 }

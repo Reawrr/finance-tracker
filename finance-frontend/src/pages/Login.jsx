@@ -40,7 +40,7 @@ export default function Login() {
         </h1>
 
         <p className="text-center text-gray-500 mb-6">
-          Login ke akun Anda
+          by Rea's Space Station
         </p>
 
         <input
@@ -78,7 +78,7 @@ export default function Login() {
             to="/register"
             className="text-blue-600 ml-1"
           >
-            Register
+            Daftar
           </Link>
         </p>
 

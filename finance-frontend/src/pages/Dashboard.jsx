@@ -43,7 +43,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-3 gap-4">
 
           <div className="bg-white shadow rounded p-5">
-            <h3>Total Income</h3>
+            <h3>Total Pendapatan</h3>
 
             <p className="text-2xl font-bold">
               Rp {data?.totalIncome}
@@ -51,7 +51,7 @@ export default function Dashboard() {
           </div>
 
           <div className="bg-white shadow rounded p-5">
-            <h3>Total Expense</h3>
+            <h3>Total Pengeluaran</h3>
 
             <p className="text-2xl font-bold">
               Rp {data?.totalExpense}
@@ -59,7 +59,7 @@ export default function Dashboard() {
           </div>
 
           <div className="bg-white shadow rounded p-5">
-            <h3>Balance</h3>
+            <h3>Saldo</h3>
 
             <p className="text-2xl font-bold">
               Rp {data?.balance}
@@ -71,7 +71,7 @@ export default function Dashboard() {
           <div className="bg-white p-5 rounded shadow">
 
               <h2 className="text-xl font-bold mb-4">
-                Expense by Category
+                Pengeluaran berdasarkan kategori
               </h2>
 
               <ExpensePieChart
@@ -85,7 +85,7 @@ export default function Dashboard() {
             <div className="bg-white p-5 rounded shadow">
 
               <h2 className="text-xl font-bold mb-4">
-                Monthly Expenses
+                Pengeluaran bulanan
               </h2>
 
               <MonthlyExpenseChart

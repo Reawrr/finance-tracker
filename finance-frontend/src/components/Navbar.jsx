@@ -29,7 +29,7 @@ export default function Navbar() {
           to="/transactions"
           className="hover:text-blue-600"
         >
-          Transactions
+          Transaksi
         </Link>
 
         <button

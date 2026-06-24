@@ -94,7 +94,7 @@ export default function Register() {
           onClick={handleRegister}
           className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700"
         >
-          Register
+          Daftar
         </button>
 
         <p className="text-center mt-4">
@@ -103,7 +103,7 @@ export default function Register() {
             to="/"
             className="text-blue-600 ml-1"
           >
-            Login
+            Masuk
           </Link>
         </p>
 
