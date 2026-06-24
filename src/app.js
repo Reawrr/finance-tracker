@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://finance-tracker.vercel.app"
+    "https://finance-tracker-three-pink.vercel.app"
   ]
 }));
 app.use(express.json());
